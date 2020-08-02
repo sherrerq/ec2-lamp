@@ -1,0 +1,10 @@
+---
+# tasks file for apache
+- name: asegurar apache no esta instalado
+  yum:
+    name: httpd
+    state: absent
+- name: asegurar apache-tools no esta instalado
+  yum:
+    name: httpd-tools
+    state: absent

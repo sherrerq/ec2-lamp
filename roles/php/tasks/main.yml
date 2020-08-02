@@ -1,0 +1,39 @@
+---
+# tasks file for php
+
+- name: Remove claquier php
+  yum:
+    name: php*
+    state: absent
+
+- name: Add Webtatic repo
+  yum:
+    name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+    state: present
+
+- name: Install PHP
+  yum:
+    name: '{{item}}'
+    state: present
+  with_items:
+     - php70w
+     - php70w-dom
+     - php70w-mbstring
+     - php70w-gd
+     - php70w-pdo
+     - php70w-json
+     - php70w-xml
+     - php70w-zip
+     - php70w-curl
+     - php70w-mcrypt
+     - php70w-pear
+     - php70w-mysql
+     - php70w-fpm
+
+  notify: restart Apache 
+- name: Upload index.php file to the remote web directory
+  copy:
+    src: index.php
+    dest: /var/www/html
+    owner: ec2-user
+    group: ec2-user
